@@ -1,0 +1,92 @@
+{
+  "name": "itsokay-marketplace",
+  "owner": {
+    "name": "itsokay-co",
+    "email": "team@itsokay.co"
+  },
+  "metadata": {
+    "description": "Official itsokay-co Claude Code plugin marketplace",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "code-review",
+      "source": "./plugins/code-review",
+      "description": "Automated code review for pull requests using multiple specialized agents with confidence-based scoring",
+      "version": "1.0.0"
+    },
+    {
+      "name": "commit-commands",
+      "source": "./plugins/commit-commands",
+      "description": "Streamline your git workflow with simple commands for committing, pushing, and creating pull requests",
+      "version": "1.0.0"
+    },
+    {
+      "name": "feature-dev",
+      "source": "./plugins/feature-dev",
+      "description": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
+      "version": "1.0.0"
+    },
+    {
+      "name": "pr-review-toolkit",
+      "source": "./plugins/pr-review-toolkit",
+      "description": "Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification",
+      "version": "1.0.0"
+    },
+    {
+      "name": "ralph-wiggum",
+      "source": "./plugins/ralph-wiggum",
+      "description": "Implementation of the Ralph Wiggum technique - continuous self-referential AI loops for interactive iterative development",
+      "version": "1.0.0"
+    },
+    {
+      "name": "security-guidance",
+      "source": "./plugins/security-guidance",
+      "description": "Security reminder hook that warns about potential security issues when editing files",
+      "version": "1.0.0"
+    },
+    {
+      "name": "frontend-design",
+      "source": "./plugins/frontend-design",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished code that avoids generic AI aesthetics.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "gemini-tools",
+      "source": "./plugins/gemini-tools",
+      "description": "Gemini 3 Pro for visual analysis, UI/UX work, and image generation",
+      "version": "1.0.0"
+    },
+    {
+      "name": "codex",
+      "source": "./plugins/codex",
+      "description": "Launch OpenAI Codex for software architecture analysis and research",
+      "version": "1.0.0"
+    },
+    {
+      "name": "dns",
+      "source": "./plugins/dns",
+      "description": "Manage DNS records via provider APIs (Spaceship, GoDaddy)",
+      "version": "1.0.0"
+    },
+    {
+      "name": "headless",
+      "source": "./plugins/headless",
+      "description": "Headless browser automation for site comparison and E2E testing",
+      "version": "0.2.0"
+    },
+    {
+      "name": "mobile",
+      "source": "./plugins/mobile",
+      "description": "Native mobile app testing - E2E and cross-platform parity",
+      "version": "0.2.0"
+    },
+    {
+      "name": "miro",
+      "source": "./plugins/miro",
+      "description": "Read and interpret Miro boards",
+      "version": "1.0.0"
+    }
+  ]
+}
