@@ -43,15 +43,22 @@ To make this marketplace available to all team members automatically, add to you
 
 ## Available Plugins
 
+### From [anthropics/claude-code](https://github.com/anthropics/claude-code)
+
 | Plugin | Description |
 |--------|-------------|
 | **code-review** | Automated code review with confidence-based scoring |
 | **commit-commands** | Git workflow commands for committing, pushing, and PRs |
 | **feature-dev** | Feature development with codebase exploration and architecture design |
+| **frontend-design** | Production-grade frontend interfaces with high design quality |
 | **pr-review-toolkit** | PR review agents for comments, tests, error handling, type design |
 | **ralph-wiggum** | Ralph Wiggum technique for iterative development loops |
 | **security-guidance** | Security warnings when editing files |
-| **frontend-design** | Production-grade frontend interfaces with high design quality |
+
+### From [paddo/claude-tools](https://github.com/paddo/claude-tools)
+
+| Plugin | Description |
+|--------|-------------|
 | **gemini-tools** | Gemini 3 Pro for visual analysis and UI mockups |
 | **codex** | OpenAI Codex for architecture analysis and code review |
 | **dns** | DNS management via Spaceship and GoDaddy APIs |
