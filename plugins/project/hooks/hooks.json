@@ -1,0 +1,19 @@
+{
+  "PostToolUse": [
+    {
+      "matcher": {
+        "tool_name": "Bash",
+        "tool_input": {
+          "command": "gh pr merge"
+        }
+      },
+      "hooks": [
+        {
+          "type": "command",
+          "command": "${CLAUDE_PLUGIN_ROOT}/hooks/check-pr-merge.sh",
+          "timeout": 5
+        }
+      ]
+    }
+  ]
+}

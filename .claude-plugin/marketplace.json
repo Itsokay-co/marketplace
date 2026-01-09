@@ -87,6 +87,12 @@
       "source": "./plugins/miro",
       "description": "Read and interpret Miro boards",
       "version": "1.0.0"
+    },
+    {
+      "name": "project",
+      "source": "./plugins/project",
+      "description": "Session workflow commands for multi-agent development - start, end, sync, health, PR, worktree",
+      "version": "1.0.0"
     }
   ]
 }
