@@ -66,6 +66,12 @@ To make this marketplace available to all team members automatically, add to you
 | **mobile** | Mobile app testing for iOS, Android, React Native, Flutter |
 | **miro** | Read and interpret Miro boards |
 
+### Original
+
+| Plugin | Description |
+|--------|-------------|
+| **project** | Session workflow commands — start, end, sync, health, PR, worktree |
+
 ## Adding Plugins
 
 ### Option 1: GitHub-hosted plugins
