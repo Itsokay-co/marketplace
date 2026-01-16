@@ -5,6 +5,5 @@
   "author": {
     "name": "itsokay-co"
   },
-  "commands": "./commands/",
-  "hooks": "./hooks/hooks.json"
+  "commands": "./commands/"
 }
