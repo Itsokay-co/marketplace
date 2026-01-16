@@ -14,12 +14,11 @@ UPSTREAM=$(gh repo view --json parent --jq '.parent.nameWithOwner // empty')
 CURRENT=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
 
 if [ -z "$UPSTREAM" ]; then
-  echo "This repo is not a fork (no upstream parent)"
-  exit 0
+  echo "ERROR: This repo is not a fork (no upstream parent)"
+else
+  echo "Fork: $CURRENT"
+  echo "Upstream: $UPSTREAM"
 fi
-
-echo "Fork: $CURRENT"
-echo "Upstream: $UPSTREAM"
 ```
 
 ### 2. Check divergence status
@@ -30,8 +29,10 @@ UPSTREAM=$(gh repo view --json parent --jq '.parent.nameWithOwner')
 CURRENT=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
 DEFAULT_BRANCH=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')
 
-gh api "repos/$CURRENT/compare/$UPSTREAM:$DEFAULT_BRANCH...$DEFAULT_BRANCH" \
-  --jq '"Ahead of upstream: \(.ahead_by)\nBehind upstream: \(.behind_by)"'
+if [ -n "$UPSTREAM" ]; then
+  gh api "repos/$CURRENT/compare/$UPSTREAM:$DEFAULT_BRANCH...$DEFAULT_BRANCH" \
+    --jq '"Ahead of upstream: \(.ahead_by)\nBehind upstream: \(.behind_by)"'
+fi
 ```
 
 ### 3. Check for uncommitted changes
@@ -39,45 +40,49 @@ gh api "repos/$CURRENT/compare/$UPSTREAM:$DEFAULT_BRANCH...$DEFAULT_BRANCH" \
 ```bash
 echo "=== Local State ==="
 if [ -n "$(git status --porcelain)" ]; then
-  echo "WARNING: Uncommitted changes exist"
+  echo "WARNING: Uncommitted changes exist - commit or stash before syncing"
   git status --short
 else
   echo "Working directory clean"
 fi
 ```
 
-### 4. Sync decision
-
-Based on the divergence:
-
-| Status | Action |
-|--------|--------|
-| Behind only | Safe sync: `gh repo sync FORK --source UPSTREAM` |
-| Ahead only | Force sync needed (will lose fork-only commits) |
-| Both | Force sync needed (diverged) |
-| 0/0 | Already synced |
-
-### 5. Execute sync (if needed)
+### 4. Sync fork with upstream
 
 ```bash
-# Safe sync (when only behind)
-gh repo sync FORK --source UPSTREAM
+echo "=== Sync ==="
+UPSTREAM=$(gh repo view --json parent --jq '.parent.nameWithOwner')
+CURRENT=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
 
-# Force sync (when ahead or diverged)
-gh repo sync FORK --source UPSTREAM --force
+if [ -z "$UPSTREAM" ]; then
+  echo "Not a fork, nothing to sync"
+else
+  echo "Run one of:"
+  echo "  Safe sync:  gh repo sync $CURRENT --source $UPSTREAM"
+  echo "  Force sync: gh repo sync $CURRENT --source $UPSTREAM --force"
+fi
 ```
 
-### 6. Verify sync
+### 5. Verify sync succeeded
 
 ```bash
 echo "=== Verify ==="
-gh api "repos/$CURRENT/compare/$UPSTREAM:$DEFAULT_BRANCH...$DEFAULT_BRANCH" \
-  --jq '"Ahead: \(.ahead_by), Behind: \(.behind_by)"'
+UPSTREAM=$(gh repo view --json parent --jq '.parent.nameWithOwner')
+CURRENT=$(gh repo view --json nameWithOwner --jq '.nameWithOwner')
+DEFAULT_BRANCH=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')
+
+if [ -n "$UPSTREAM" ]; then
+  gh api "repos/$CURRENT/compare/$UPSTREAM:$DEFAULT_BRANCH...$DEFAULT_BRANCH" \
+    --jq '"Ahead: \(.ahead_by), Behind: \(.behind_by)"'
+fi
 ```
 
-## When to use
+## Interpreting results
 
-- Before starting work on a fork
-- When `/project:health` shows fork divergence
-- After accidentally committing to fork's main branch
-- Periodically to stay in sync with upstream
+| Finding | Action |
+|---------|--------|
+| Behind only (0 ahead, N behind) | Safe sync: `gh repo sync` |
+| Ahead only (N ahead, 0 behind) | Force sync needed (loses fork commits) |
+| Both > 0 | Force sync needed (diverged history) |
+| 0/0 | Already synced, nothing to do |
+| Not a fork | This command doesn't apply |
