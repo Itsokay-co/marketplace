@@ -1,19 +1,22 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tool_name": "Bash",
-        "tool_input": {
-          "command": "gh pr merge"
-        }
-      },
-      "hooks": [
-        {
-          "type": "command",
-          "command": "${CLAUDE_PLUGIN_ROOT}/hooks/check-pr-merge.sh",
-          "timeout": 5
-        }
-      ]
-    }
-  ]
+  "description": "Project plugin hook for PR merge detection",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": {
+          "tool_name": "Bash",
+          "tool_input": {
+            "command": "gh pr merge"
+          }
+        },
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/check-pr-merge.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
 }
