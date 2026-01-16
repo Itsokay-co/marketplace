@@ -3,12 +3,7 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": {
-          "tool_name": "Bash",
-          "tool_input": {
-            "command": "gh pr merge"
-          }
-        },
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
